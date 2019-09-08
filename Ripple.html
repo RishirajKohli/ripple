@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Ripple Effect</title>
+    <style>
+      .hoverOn {
+        position: relative;
+        display: inline-block;
+        overflow: hidden;
+      }
+
+      .hoverOn .content {
+        height: 100px;
+        width: 500px;
+        position: relative;
+        z-index: 5;
+        transition: color 0.7s;
+      }
+
+      .hoverOn span {
+        border-radius: 100%;
+        position: absolute;
+        display: block;
+        content: "";
+        z-index: 0;
+        width: 0;
+        height: 0;
+        background: rgba(0, 0, 0, 0.1);
+        transform: translate(-50%, -50%);
+        transition: width 0.7s, padding-top 0.7s;
+      }
+
+      .hoverOn:hover span {
+        width: calc(100% * 2.25);
+        padding-top: calc(100% * 2.25);
+      }
+    </style>
+  </head>
+  <body>
+    <a class="hoverOn">
+      <span></span>
+      <div class="content">Hover Me!</div>
+    </a>
+  </body>
+
+  <script>
+    const ELEMENTS = document.querySelectorAll(".hoverOn");
+    const ELEMENTS_SPAN = [];
+
+    ELEMENTS.forEach((element, index) => {
+      // If The span element for this element does not exist in the array, add it.
+      if (!ELEMENTS_SPAN[index])
+        ELEMENTS_SPAN[index] = element.querySelector("span");
+
+      element.addEventListener("mouseover", e => {
+        ELEMENTS_SPAN[index].style.left = e.pageX - element.offsetLeft + "px";
+        ELEMENTS_SPAN[index].style.top = e.pageY - element.offsetTop + "px";
+      });
+
+      element.addEventListener("mouseout", e => {
+        ELEMENTS_SPAN[index].style.left = e.pageX - element.offsetLeft + "px";
+        ELEMENTS_SPAN[index].style.top = e.pageY - element.offsetTop + "px";
+      });
+    });
+  </script>
+</html>
